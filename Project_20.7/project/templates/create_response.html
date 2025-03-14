@@ -1,0 +1,11 @@
+{% extends 'default.html'%}
+
+{% block content %}
+<h2>Отклик на объявление: {{ post.title }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
+<a href="{% url 'index' %}">Вернуться</a>
+{% endblock %}

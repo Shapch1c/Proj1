@@ -1,0 +1,61 @@
+{% extends 'default.html'%}
+{% load custom_filters %}
+{% load censor_filters %}
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+{% block content %}
+    <h1>Новость</h1>
+    {% if post %}
+        <table>
+            <tr>
+                <th width="10%">Заголовок</th>
+            </tr>
+            <tr>
+                <td>{{ post.title }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th width="80%">Содержание</th>
+            </tr>
+            <tr>
+                <td>{{ post.text|censor }}</td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th width="10%">Дата публикации</th>
+            </tr>
+            <tr>
+                <td>{{ post.post_time|date:'d M Y' }}</td>
+            {% endif %}
+            </tr>
+        </table>
+
+        <!-- Кнопка "Откликнуться" -->
+        <button style="margin-top: 10px;">
+            <a href="{% url 'create_response' post.id %}">Откликнуться</a>
+        </button>
+
+        <button style="margin-top: 10px">
+            <a href="/">Страница с новостями</a>
+        </button>
+
+        <!-- Принятые отклики -->
+        <h2>Принятые отклики</h2>
+        {% for response in post.post_responses.all %}
+            {% if response.accepted %}
+                <div style="border: 1px solid #ccc; padding: 10px; margin-top: 10px;">
+                    <p><strong>{{ response.user.username }}</strong>:</p>
+                    <p>{{ response.text }}</p>
+                </div>
+            {% endif %}
+        {% empty %}
+            <p>Пока нет принятых откликов.</p>
+        {% endfor %}
+
+{% endblock content %}
+</body>

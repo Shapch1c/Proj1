@@ -1,0 +1,13 @@
+{% extends 'default.html' %}
+
+{% block content %}
+<h1>Новость</h1>
+<button style="margin-top: 10px"> <a href="/"> К новостям</a> </button>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.media }}  <!-- Добавляет поддержку CKEditor -->
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+{% endblock content %}

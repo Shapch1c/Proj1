@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+{% block content %}
+<h2>Верификация</h2>
+<form method="POST" action="{% url 'verify' %}">
+    {% csrf_token %}
+
+    <label for="email">Ваш email:</label>
+    <input type="email" name="email" value="{{ request.session.email }}" readonly required>
+
+    <label for="code">Введите код подтверждения:</label>
+    <input type="text" name="code" required>
+
+    <button type="submit">Подтвердить</button>
+</form>
+{% endblock %}

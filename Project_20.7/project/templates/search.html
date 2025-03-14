@@ -1,0 +1,48 @@
+{% extends 'default.html'%}
+{% load custom_filters %}
+{% load censor_filters %}
+{% load custom_tags %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+</head>
+<body>
+{% block content %}
+    <h1>Все новости</h1>
+   <form action="" method="get">
+       {{ filterset.form.as_p }}
+       <input type="submit" value="Найти" />
+   </form>
+    <table>
+        <tr>
+            <td><u>Заголовок</u></td>
+            <td><u>Дата публикации</u></td>
+            <td><u>Содержание</u></td>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.title }}</td>
+            <td>{{ post.post_time }}</td>
+            <td>{{ post.text|truncatechars:21|censor }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% if page_obj.has_previous %}
+       <a href="?{% url_replace page=1 %}">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?{% url_replace page=page_obj.previous_page_number %}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+{% endif %}
+
+{% if page_obj.has_next %}
+       <a href="?{% url_replace page=page_obj.next_page_number %}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?{% url_replace page=page_obj.paginator.num_pages %}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+{% endif %}
+
+{% endblock content%}
+</body>
