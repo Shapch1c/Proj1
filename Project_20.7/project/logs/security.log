@@ -1,0 +1,2 @@
+2025-03-05 01:18:11,062 [WARNING] [log] Forbidden (CSRF token from POST incorrect.): /registration/yandex/login/
+2025-03-11 20:38:12,696 [WARNING] [log] Forbidden (CSRF token from POST incorrect.): /register/
